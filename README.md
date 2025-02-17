@@ -39,6 +39,7 @@ When you do, you should get some text in your terminal like:
 Most importantly, **DO NOT RUN ON THE LOGIN NODE!** \
 What is the login node? It's where you land after log in.
 You can see your location next to your username at the commandline prompt. 
+<br />  
 ```[user123@login1 ~]$  ```
 
 Now that our terminal is connected to the CRC cluster, if we want to issue commands we have to speak in the computer's language so it can understand us. First, let's get an idea of how the CRC's logistic layers are arranged. 
