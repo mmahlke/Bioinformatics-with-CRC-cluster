@@ -11,9 +11,9 @@ The 'cluster' refers to the **CRC ecosystem** that contains the total footprint 
 
 Why are we using it? A typical laptop or personal computer does not have enough storage space or resources (Memory, Processing power) to analyse many sequencing files.
 + CUT&RUN ~ 3 Gb per experiment
-+ DiMeLo-seq ~ 20 Gb per experiment \
-
-  The storage footprint of sequencing files can double or triple during analysis.
++ DiMeLo-seq ~ 20 Gb per experiment  
+\
+The storage footprint of sequencing files can double or triple during analysis.
 
 We conenct to the CRC cluster through our **Client**, which is the software we are using on our personal computer to interact with the CRC cluster. Our interactions with the cluster pass through an **Access Portal**, or a remote server that take the information we submit from our client and passes it on to the CRC cluster. \
  \
@@ -54,6 +54,16 @@ The language(s) we speak to the computer in are either **Linux** or **Bash**. Yo
 
 There are many websites with cheat sheets for basic Bash and Linux commands. I like [this](https://www.geeksforgeeks.org/linux-commands-cheat-sheet/) and [this](https://cheatography.com/davechild/cheat-sheets/linux-command-line/) but there are so many amazing resources out there that you can find. If you have time, take a look [here](https://github.com/jlevy/the-art-of-command-line). The best resource is your search engine. Want to do something but do not know how? Ask Google or ask ChatGPT. 
 
+Don't sleep on cuilt-in help options that come with utilities in the command line. 
+For example, if using `tar`, try:
+```
+$ man tar
+
+$ info tar
+
+$ tar —help
+```
+  \
 Ok, so we are using our **terminal emulator** software to speak **BASH** to the **Linux** kernel governing CRC's cluster hardware. 
 
 Let's run some basic commands in the login node that do not require any resources.
@@ -146,7 +156,34 @@ Recommended options:
 ```srun -t 01:00:00 --cluster htc --partition htc --cpus-per-task=8 --pty bash```
 
 You will recieve notification of your resource request and notification when it is granted. Resource requests can take longer to fill if you request a greater share of the resources. This is true for interactive and batch jobs. If resources are currently unavailable, you will be placed in a queue. 
-Once resources are granted, you will see in your terminal that you are no longer in the login node and are now working in a node on the htc cluster.
+Once resources are granted, you will see in your terminal that you are no longer in the login node and are now working in a node on the htc cluster. \
+ \
+ `[user123@htc-657-n3 ~]$` 
+
+ If we enter `squeue -u <username> --cluster htc`, we will see our currently running job that we requested resources for on the htc cluster.
+
+ **Now that we have a workspace, let's grab some files to practice with**
+
+ There are 4 directories (folders, file paths) that you will work with on the cluster:
+ + `/ihome/yarbely/<your_username>` is your personal home folder and scratch space
+   + you can store small files here like models, custom scripts or whatever you please
+   + when you build a virtual environment, it will be installed here
+   + you can also custom install packages/utilities here   
+ + `/ix1/yarbely/<your_username>` is your main data working area (your benchtop)
+   + perform all data analyses in this large space
+   + our storage allocation is shared by the entire lab    
+ + `/ix1/yarbely/Data` is our operational space for storing new sequencing data
+   + **NEVER** modify files in this folder
+   + Copy them to your data benchtop before analyzing 
+ + `/bgfs/yarbely/Data` is our 'defunct' space for storaing sequencing data
+   + **NEVER** modify files in this folder
+   + Copy them to your data benchtop before analyzing
+   + We will never recieve more storage space here; if we remove things no longer used to a different storage space, we can add new things here
+
+ /
+ 
+
+ 
 
 
 
