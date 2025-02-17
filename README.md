@@ -9,15 +9,23 @@
 
 The 'cluster' refers to the **CRC ecosystem** that contains the total footprint of the CRC infrastructure, including high performance computing clusters, data storage systems, networking equipment, and software. For us, we can simply imagine it as a giant, stronger, faster computer. 
 
-Why are we using it? A typical laptop or personal computer does not have enough storage space or resources (Memory, Processing power) to analyse many sequencing files. For example, a small sequenicng file like a CUT&RUN experiment starts off as 3 Gb and a large sequencing file like a DiMeLo-seq experiment can be around 20 Gb when compressed. The storage footprint of sequencing files can double or triple during analysis.
+Why are we using it? A typical laptop or personal computer does not have enough storage space or resources (Memory, Processing power) to analyse many sequencing files.
++ CUT&RUN ~ 3 Gb per experiment
++ DiMeLo-seq ~ 20 Gb per experiment \
 
-We conenct to the CRC cluster through our **Client**, which is the software we are using on our personal computer to interact with the CRC cluster. Our interactions with the cluster pass through an **Access Portal**, or a remote server that take the information we submit from our client and passes it on to the CRC cluster. **Access portals** are typically remote servers, which refers to a computer system that is accessed over a network, like the internet, allowing users to store, manage, and access data and applications from anywhere with an internet connection, rather than being physically located in the same place as the user.
+  The storage footprint of sequencing files can double or triple during analysis.
 
-For us, our **client(s)** are Pitt's VPN software, which gives us access to Pitt's secure private network, and our terminal emulator software (MobaXterm or Termius), which allows us to establish a connection to the CRC. Why is it called a terminal emulator? Take yourself way back in your imagination to when computers were huge and took up an entire room. The box that controlled the computer was called the terminal. Here, the terminal emulator is serving the same function for the CRC cluster, but instead of being connected to the giant computer (cluster), it's giving commands to the giant computer over the internet. 
+We conenct to the CRC cluster through our **Client**, which is the software we are using on our personal computer to interact with the CRC cluster. Our interactions with the cluster pass through an **Access Portal**, or a remote server that take the information we submit from our client and passes it on to the CRC cluster. \
+ \
+**Access portals** are typically remote servers, which refers to a computer system that is accessed over a network, like the internet, allowing users to store, manage, and access data and applications from anywhere with an internet connection, rather than being physically located in the same place as the user.
+
+For us, our **client(s)** are Pitt's VPN software, which gives us access to Pitt's secure private network, and our terminal emulator software (MobaXterm or Termius), which allows us to establish a connection to the CRC. \
+ \
+Why is it called a terminal emulator? Take yourself way back in your imagination to when computers were huge and took up an entire room. The box that controlled the computer was called the terminal. Here, the terminal emulator is serving the same function for the CRC cluster, but instead of being connected to the giant computer (cluster), it's giving commands to the giant computer over the internet. 
 
 Our **access portal** refers to how we are interacting with the cluster. We will primarily interact through the 'login node' pictured above. CRC also provides user access to viz (in-browser Linux Desktop environment on the CRCD system), OnDemand (requesting resources for interactive visual software, etc) and JupyterHub (web-based interactive development environment for notebooks, code, and data). 
 <br />  
-<br />  
+  \
 **Let's log in!** By log in, I mean start your remote terminal session that connects you to the CRC cluster.
 
 When you do, you should get some text in your terminal like:
@@ -26,13 +34,29 @@ When you do, you should get some text in your terminal like:
 
 **These notifications are so important!** However, they are a bit outdated.
 + The current user guide is at [crc manual](https://crc-pages.pitt.edu/user-manual/)
-+ crc-interactive may be depricated; recoomend using **slurm** commands (see below)
++ crc-interactive may be depricated; recommend using **SLURM** commands (see below)
 
-Most importantly, **DO NOT RUN ON THE LOGIN NODE!**
+Most importantly, **DO NOT RUN ON THE LOGIN NODE!** \
 What is the login node? It's where you land after log in.
-You can see your location next to your username at the commandline prompt. *YourUser*@login#
+You can see your location next to your username at the commandline prompt. 
+```[user123@login1 ~]$  ```
 
-We can run some basic commands in the login node that do not require any resources.
+Now that our terminal is connected to the CRC cluster, if we want to issue commands we have to speak in the computer's language so it can understand us. First, let's get an idea of how the CRC's logistic layers are arranged. 
+
+![computing layers](shell_layers.png)
+*Source:https://mindmajix.com/shell-scripting-tutorial*
+
+The cluster's kernel is run by [Linux](https://en.wikipedia.org/wiki/Linux), as opposed to an operating system like MacOS or Windows. The kernel is he primary interface between the computer's hardware and the software processes running on it.
+
+The cluster is also 'wrapped' by a command-line interface (CLI) program that allows users to interact with the kernel by typing commands. This 'shell' wrapping the kernel is called [BASH](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) (or Bourne Again Shell). 
+
+The language(s) we speak to the computer in are either **Linux** or **Bash**. You will find a lot of murky language discussing Bash and Linux. In fact, it's easy (and common) to confuse Linux and Bash commands. And really there are only small differenes in when we use them. Technically, BASH commands are a subset of Linux commands focused on shell scripting, whereas Linux commands encompass a larger set of tools. Bash is primarily a user interface for communicating with Linux, though linux commands exist outside of Bash and can also be executed on the command line. 
+
+There are many websites with cheat sheets for basic Bash and Linux commands. I like [this](https://www.geeksforgeeks.org/linux-commands-cheat-sheet/) and [this](https://cheatography.com/davechild/cheat-sheets/linux-command-line/) but there are so many amazing resources out there that you can find. If you have time, take a look [here](https://github.com/jlevy/the-art-of-command-line). The best resource is your search engine. Want to do something but do not know how? Ask Google or ask ChatGPT. 
+
+Ok, so we are using our **terminal emulator** software to speak **BASH** to the **Linux** kernel governing CRC's cluster hardware. 
+
+Let's run some basic commands in the login node that do not require any resources.
 
 + Use `sinfo` to return the status of all clusters.
 
@@ -111,19 +135,18 @@ When requesting a job with slurm, there are many [options](https://slurm.schedmd
 
 Recommended options:
 + `--cpus-per-task` to specify how many CPUs to use for your task, this helps split tasks across multiple CPUs and complete them more efficiently
-+ For batch scripts:
++ For **batch scripts**:
   + `--job-name=<name>` to specify a easy to read name for your job that you can see in job manager with `squeue`
   + `--error=<path/for/error/messages.txt>` and `--output=<path/to/save/terminal/output.txt.` to give you some readout on what happened/is happening in batch jobs running in the background
 
 [Here](https://slurm.schedmd.com/pdfs/summary.pdf) is a cheat sheet to the basic slurm commands.
 
 **Let's request an interactive job and leave the login node**
-<br />  
-<br />  
 
 ```srun -t 01:00:00 --cluster htc --partition htc --cpus-per-task=8 --pty bash```
 
-You should recieve notification of your resource request and when it is granted, you will see in your terminal that you are no longer in the login node and are now working in a node on the htc cluster.
+You will recieve notification of your resource request and notification when it is granted. Resource requests can take longer to fill if you request a greater share of the resources. This is true for interactive and batch jobs. If resources are currently unavailable, you will be placed in a queue. 
+Once resources are granted, you will see in your terminal that you are no longer in the login node and are now working in a node on the htc cluster.
 
 
 
