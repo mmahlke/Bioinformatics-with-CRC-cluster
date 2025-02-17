@@ -186,24 +186,29 @@ Once resources are granted, you will see in your terminal that you are no longer
    + Copy them to your data benchtop before analyzing
    + We will never recieve more storage space here; if we remove things no longer used to a different storage space, we can add new things here
 
-First, let's check our current location in the directory of all the files:
-```$ pwd  ```
+First, let's check our current location in the directory of all the files:\
+```$ pwd  ```\
 Your current directory is often called your working directory (ie. the directory you are currently working in).
 
-Let's change our directory to the space we want to work in:
+Let's change our directory to the space we want to work in:\
 ```$ cd /ix1/yarbely/<your_username>  ```
 
-Now create a file that we can put all of our training stuff into:
+Now create a file that we can put all of our training stuff into:\
 ```$ mkdir /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
 
-Let's copy some files into our training directory so we can investigate them:
+Let's copy some files into our training directory so we can investigate them:\
 ```$ cp /bgfs/yarbely/Data/CUT_RUN/Pool_4/01.RawData/YNA_4_1/. /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
 + YNA_4_1 is a PD-NC4 control sample
-+ copy command syntax is cp source destination
++ copy command syntax is `cp <source> <destination>`
 + /.../YNA_4_1/.    the '.' at the end means the source is all files and folders inside of /YNA_4_1 directory
  
+Notice the file extension at the end of the file name. It ends with ".fq.gz". This indicates that the normal extension for the files is .fastq but they have been compressed with `gzip` utility. Let's unzip them:
+```
+cd /ix1/yarbely/<your_username>/training/CR_PDNC4 
+gunzip *.gz 
 
- 
+```
+Here, using the wildcard symbol (*) means perform this operation on all files in the current directory with any name and ending with `.gz` .
 
 
 
