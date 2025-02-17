@@ -1,6 +1,6 @@
 # **Bioinformatics with Pitt's Center for Research Computing (CRC) cluster**
-## *YNA lab training series, pt 1*
-#
+*YNA lab training series, pt 1*
+
 
 
 ## What is the cluster?
@@ -16,13 +16,42 @@ We conenct to the CRC cluster through our **Client**, which is the software we a
 For us, our **client(s)** are Pitt's VPN software, which gives us access to Pitt's secure private network, and our terminal emulator software (MobaXterm or Termius), which allows us to establish a connection to the CRC. Why is it called a terminal emulator? Take yourself way back in your imagination to when computers were huge and took up an entire room. The box that controlled the computer was called the terminal. Here, the terminal emulator is serving the same function for the CRC cluster, but instead of being connected to the giant computer (cluster), it's giving commands to the giant computer over the internet. 
 
 Our **access portal** refers to how we are interacting with the cluster. We will primarily interact through the 'login node' pictured above. CRC also provides user access to viz (in-browser Linux Desktop environment on the CRCD system), OnDemand (requesting resources for interactive visual software, etc) and JupyterHub (web-based interactive development environment for notebooks, code, and data). 
+#
 
-Let's log in! When you do, you should get some text in your terminal like:
+**Let's log in!** By log in, I mean start your remote terminal session that connects you to the CRC cluster.
 
+When you do, you should get some text in your terminal like:
 
-### The cluster is composed of different parts
+![image of cluster sign-in messages](thumbnail_image.png)
 
+**These notifications are so important!** However, they are a bit outdated.
++ The current user guide is at [crc user guide](https://crc-pages.pitt.edu/user-manual/)
++ crc-interactive may be depricated; recoomend using **slurm** commands (see below)
 
+Most importantly, **DO NOT RUN ON THE LOGIN NODE!**
+What is the login node? It's where you land after log in.
+You can see your location next to your username at the commandline prompt. *YourUser*@login#
 
+We cannot work here, so we need to request a place to work.
+
+### The 'cluster' is composed of different clusters
+
+The parts of the CRC ecosystem are organized into clusters designed for unique usage or tasks. 
+
+| Cluster Acronym  | Full form | Usage description | Our usage |
+| ------------- | ------------- | ------------- | ------------- |
+| mpi  | Message Passing Interface  | For tightly coupled parallel codes that use the Message Passing Interface APIs for distributing computation across multiple nodes, each with its own memory space | none |
+| htc  | High Throughput Computing  | For genomics and other health sciences-related workflows that can run on a single node | Most small to moderate tasks; ChIP-seq, C&R analysis |
+| smp | Shared Memory Processing | For jobs that can run on a single node where the CPU cores share a common memory space | Any high-memory tasks; DiMeLo processing |
+| gpu | Graphics Processing Unit | For AI/ML applications and physics-based simulation codes that had been written to take advantage of accelerated computing on GPU cores | Guppy basecalling requires a GPU |
+
+Each cluster is composed of different hardware that offers different resources. Clusters also have individual regulations on how you request resources. For instance, you cannot request more than one node at a time on the htc cluster.
+
+You can find more information about the organization of each cluster here:
+
+**Important things to understand about cluster and resource structure:**
++
+
+We need to request the resources we need for the task we want to perform. 
 
 
