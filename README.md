@@ -25,8 +25,11 @@ Why is it called a terminal emulator? Take yourself way back in your imagination
 
 Our **access portal** refers to how we are interacting with the cluster. We will primarily interact through the 'login node' pictured above. CRC also provides user access to viz (in-browser Linux Desktop environment on the CRCD system), OnDemand (requesting resources for interactive visual software, etc) and JupyterHub (web-based interactive development environment for notebooks, code, and data). 
 <br />  
-  \
+
+## Logging in to the cluster
 **Let's log in!** By log in, I mean start your remote terminal session that connects you to the CRC cluster.
+
+If you have already installed PITT's VPN and a terminal emulator and set them up with the guidance [here](https://crc-pages.pitt.edu/user-manual/getting-started/terminal/), you will be able to log in with your PITT username and password. 
 
 When you do, you should get some text in your terminal like:
 
@@ -41,7 +44,7 @@ What is the login node? It's where you land after log in.
 You can see your location next to your username at the commandline prompt. 
 <br />  
 ```[user123@login1 ~]$  ```
-
+## Using the command line on the cluster
 Now that our terminal is connected to the CRC cluster, if we want to issue commands we have to speak in the computer's language so it can understand us. First, let's get an idea of how the CRC's logistic layers are arranged. 
 
 ![computing layers](shell_layers.png)
@@ -51,11 +54,11 @@ The cluster's kernel is run by [Linux](https://en.wikipedia.org/wiki/Linux), as 
 
 The cluster is also 'wrapped' by a command-line interface (CLI) program that allows users to interact with the kernel by typing commands. This 'shell' wrapping the kernel is called [BASH](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) (or Bourne Again Shell). 
 
-The language(s) we speak to the computer in are either **Linux** or **Bash**. You will find a lot of murky language discussing Bash and Linux. In fact, it's easy (and common) to confuse Linux and Bash commands. And really there are only small differenes in when we use them. Technically, BASH commands are a subset of Linux commands focused on shell scripting, whereas Linux commands encompass a larger set of tools. Bash is primarily a user interface for communicating with Linux, though linux commands exist outside of Bash and can also be executed on the command line. 
+The language(s) we speak to the computer in are either **Linux** or **Bash**. You will find a lot of murky language discussing Bash and Linux. In fact, it's easy (and common) to confuse Linux and Bash commands. And really there are only small differenes in when we use them. Technically, BASH commands are a subset of Linux commands focused on shell scripting, whereas Linux commands encompass a larger set of tools. Bash is primarily a user interface for communicating with Linux, though Linux commands exist outside of Bash and can also be executed on the command line. 
 
-There are many websites with cheat sheets for basic Bash and Linux commands. I like [this](https://www.geeksforgeeks.org/linux-commands-cheat-sheet/) and [this](https://cheatography.com/davechild/cheat-sheets/linux-command-line/) but there are so many amazing resources out there that you can find. If you have time, take a look [here](https://github.com/jlevy/the-art-of-command-line). The best resource is your search engine. Want to do something but do not know how? Ask Google or ask ChatGPT. 
+There are many websites with cheat sheets for basic Bash and Linux commands. I like [this](https://www.geeksforgeeks.org/linux-commands-cheat-sheet/) and [this](https://cheatography.com/davechild/cheat-sheets/linux-command-line/) but there are so many amazing resources out there that you can find. If you have time, take a look [here](https://github.com/jlevy/the-art-of-command-line).  
 
-Don't sleep on cuilt-in help options that come with utilities in the command line. 
+Don't sleep on built-in help options that come with utilities in the command line. 
 For example, if using `tar`, try:
 ```
 $ man tar
@@ -64,7 +67,9 @@ $ info tar
 
 $ tar —help
 ```
-  \
+The best resource is your search engine. Want to do something but do not know how? Ask Google or ask ChatGPT.
+<br />
+
 Ok, so we are using our **terminal emulator** software to speak **BASH** to the **Linux** kernel governing CRC's cluster hardware. 
 
 Let's run some basic commands in the login node that do not require any resources.
@@ -181,7 +186,21 @@ Once resources are granted, you will see in your terminal that you are no longer
    + Copy them to your data benchtop before analyzing
    + We will never recieve more storage space here; if we remove things no longer used to a different storage space, we can add new things here
 
- /
+First, let's check our current location in the directory of all the files:
+```$ pwd  ```
+Your current directory is often called your working directory (ie. the directory you are currently working in).
+
+Let's change our directory to the space we want to work in:
+```$ cd /ix1/yarbely/<your_username>  ```
+
+Now create a file that we can put all of our training stuff into:
+```$ mkdir /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
+
+Let's copy some files into our training directory so we can investigate them:
+```$ cp /bgfs/yarbely/Data/CUT_RUN/Pool_4/01.RawData/YNA_4_1/. /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
++ YNA_4_1 is a PD-NC4 control sample
++ copy command syntax is cp source destination
++ /.../YNA_4_1/.    the '.' at the end means the source is all files and folders inside of /YNA_4_1 directory
  
 
  
