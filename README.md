@@ -226,7 +226,7 @@ Now we have our unpacked files. Let's **re-name** them so we don't have to conti
 Most sequencing data starts as .fasta or .fastq (the more current version of .fasta) format. Let's investigate the structure of a .fastq file.
 
 ```
-head -n 20 PDNC4_1.fastq
+head -n 20 PDNC4_1.fq
 ```
 `head` is a Linux/BASH command that lets us see the beginning of a file. By default, it returns the first 5 lines of a file. Here, we specify the number of lines to display with ` -n 20 `. \
 `tail` command will show you the last -n lines of a file.
@@ -282,16 +282,16 @@ We should see something like this:
   <img src="https://github.com/mmahlke/Training/blob/main/fastqc.png" alt="fastqc output" style="width:75%; height:75%;">
 </div>
 
-
+<br />   
 Let's look at a module we will use A LOT. 
+
 ```
 module load gcc/8.2.0
 module load samtools/1.14
 samtools --help
-
 ```
 
-Samtools has a lot of utilities that are extremely useful for processing data once it has been aligned to an assembly. \
+**Samtools** has a lot of utilities that are extremely useful for processing data once it has been aligned to an assembly. \
 It also has an excellent online manual you can find [here](https://www.htslib.org/doc/samtools.html).
 
 To create an aligned sequencing file, we need to take our raw reads (.fastq files) and align them to an assembly (we will use the T2T assembly). 
@@ -317,7 +317,148 @@ Now we have an assembly and we have raw sequencing .fastq files. It's time to al
 
 ## Submitting batch jobs on the cluster
 
+Submitting a batch job is equivalent to sending a list of instructions to the cluster without being able to check between steps. Sometimes this approach is called 'submitting a batch script'. 
 
+You've probably heard the term 'script' a lot. What does that even mean? It's exactly what it sounds like. A play has a script that tells the actors what to say, when to say, how to say, where to stand, how loud to be, etc, etc. A 'script' is just a set of directions you supply to the cluster. \
+
+Batch scripts are just text files and you can build them in any text editor. Open whatever text editor your computer already comes equipped with. \
+
+I like [notepad++](https://notepad-plus-plus.org/) if you like to have extra features!
+
+To start a script, we need to tell Linux what command line interface (CLI) we want to use to interpret the rest of the script. Ours is BASH. The lines at the beginning of the script are called the bash shebang and starts with the characters #!. For bash scripts, it typically looks like this: #!/bin/bash or #!/usr/bin/env bash.
+
+We also want to specify the resources and specifications should be used for this job in the subsequent lines. For those lines, we do not need to include '!', but we will start the lines with '#' and follow with command "SBATCH" to specify that these are instructions to SLURM. \
+
+In general, across many computing languages used to write scripts, lines that start with '#' are 'read' but not 'executed'. Lines starting with '#' can be explicit instructions to the operating system or they can be comments for the reader/writer. Either way, Linux will interpret '#' lines are non-commands or non-executables. \
+
+Let's start our file like this:
+```
+#!/bin/bash
+#
+#SBATCH --job-name=PDNC4_practice
+#SBATCH --cluster=htc
+#SBATCH --partition=htc
+#SBATCH --time=24:00:00
+#SBATCH --cpus-per-task=16
+#SBATCH --verbose
+#SBATCH --error=/ix1/yarbely/<your_user>/training/CR_PDNC4/job.%J.err
+#SBATCH --output=/ix1/yarbely/<your_user>/training/CR_PDNC4/job.%J.out
+
+```
+Here, we are requesting resources for a job named "PDNC4_practice" for 24 hours on the htc cluster which has only one partition, the htc partition. We have requested 16 cpus per task. We have requested verbose output, which means any possible output to the terminal from our commands will be recorded. And we have specified files for the output and error messages to be placed into. 
+
+Now we should tell Linux what modules we need to load to complete the tasks in this script. For this script, we will build an index for our assembly file, trim our raw reads, and align them to the assembly. To do that, we need:
+```
+module load cutadapt/2.10
+module load gcc/8.2.0
+module load bowtie2/2.4.1
+```
+So let's add that to the file. 
+
+Let's also tell Linux where we want to perform this work.
+```
+cd /ix1/yarbely/<your_user>/training/CR_PDNC4/
+```
+
+Now we can add our commands. 
+
+First, we will trim the reads with CutAdapt to remove any remaining adapter sequences that can interfere with alignment to the reference assembly. 
+```
+cutadapt \
+	-m 20 \
+-a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA \
+-A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
+-o PDNC4_1.trimmed.fq -p PDNC4_2.trimmed.fq \
+PDNC4_1.fq PDNC4_2.fq
+```
+Here, 
++ -m specifies the minimum fragment length. Anything below 20 bp will be trashed. You can change as you like.
++ -a is the forward adapter trimming sequence
++ -A is the reverse adapter trimming sequence
+ + You can find both of these sequences in the documentation for the NEB Next lib prep kit. You should change this if using a different kit with different adaptor sequences.
++ -o and -p are the out files for the forward and reverse paired reads
++ the final line is the two .fastq files we are starting with
+
+Next, we align the trimmed reads. [Bowtie2](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml) is the aligning tool we will use for our CUT&RUN data. Before we can align with Bowtie2, we need to build an index for our assembly to help bowtie2 perform its job more efficiently. 
+
+```
+bowtie2-build ./GCF_000001405.40_GRCh38.p14_genomic.fna.gz h38.p14
+```
+Here,
++ ./GCF_000001405.40_GRCh38.p14_genomic.fna.gz is the path to the file we want to index
++ h38.p14 is the 'nickname' we want to use for the index
+
+Now we are ready to align. Add an alignment command for Bowtie2 to the script:
+```
+bowtie2 \
+	--end-to-end --very-sensitive --no-mixed --no-discordant -I 10 -X 700 --dovetail -p 8 \
+	-x /ix1/yarbely/<your_user>/training/CR_PDNC4/h38.p14 \
+	-1 PDNC4_1.trimmed.fq \
+	-2 PDNC4_2.trimmed.fq \
+	-S PDNC4_test.sam
+```
+Here, 
++ --end-to-end, --very-sensitive, --no-mixed, and --no-discordant are options that specify alignment with no mismatch to the genome assembly from both reads in a pair
++ -I 10 and -X 700 set the range of inter-mates distances
++ --dovetail means if the mates "dovetail", or if one mate alignment extends past the beginning of the other such that the wrong mate begins upstream, consider that to be concordant
+ + these settings are recommended for CUT&RUN
++ -p 8 is specifying to split this process into 8 threads (to go faster)
++ -x is the location of the assembly and index with the last entry being the index 'nickname'
++ -1 and -2 are our paired raw read files
++ -S is our ouput of a .sam file
+
+So in total, our file should look like this:
+
+```
+#!/bin/bash
+#
+#SBATCH --job-name=PDNC4_practice
+#SBATCH --cluster=htc
+#SBATCH --partition=htc
+#SBATCH --time=24:00:00
+#SBATCH --cpus-per-task=16
+#SBATCH --verbose
+#SBATCH --error=/ix1/yarbely/<your_user>/training/CR_PDNC4/job.%J.err
+#SBATCH --output=/ix1/yarbely/<your_user>/training/CR_PDNC4/job.%J.out
+
+module load cutadapt/2.10
+module load gcc/8.2.0
+module load bowtie2/2.4.1
+
+cd /ix1/yarbely/<your_user>/training/CR_PDNC4
+
+cutadapt \
+	-m 20 \
+-a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA \
+-A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
+-o PDNC4_1.trimmed.fq -p PDNC4_2.trimmed.fq \
+PDNC4_1.fq PDNC4_2.fq
+
+bowtie2-build ./GCF_000001405.40_GRCh38.p14_genomic.fna.gz h38.p14
+
+bowtie2 \
+	--end-to-end --very-sensitive --no-mixed --no-discordant -I 10 -X 700 --dovetail -p 8 \
+	-x /ix1/yarbely/<your_user>/training/CR_PDNC4/h38.p14 \
+	-1 PDNC4_1.trimmed.fq \
+	-2 PDNC4_2.trimmed.fq \
+	-S PDNC4_test.sam
+```
+Now, we need to save the file. You can save it as 'PDNC4_alignment_test.txt' or 'PDNC4_alignment_test.bash'. 
+Let's upload it to our current directory using our SSH files window.
+
+Now we can submit this script to the cluster and let it work. 
+
+```
+[user@login-1]$ sbatch /ix1/yarbely/<your_user>/training/CR_PDNC4/PDNC4_alignment_test.txt
+```
+Where the command `sbatch` is followed by the full path to the file. Because this script will run in the background, we can submit it with `sbatch` from the login node or from an interactive session. 
+
+Lastly, let's check that the script is running.
+```
+squeue -u <username> --cluster htc
+```
+
+In the next session, we will check on the file, perform more analysis steps, and finally see our data!
 
 
 
