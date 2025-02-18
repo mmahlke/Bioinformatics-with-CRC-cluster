@@ -33,7 +33,9 @@ If you have already installed PITT's VPN and a terminal emulator and set them up
 
 When you do, you should get some text in your terminal like:
 
-![image of cluster sign-in messages](thumbnail_image.png)
+<div align="center">
+ <img src="https://github.com/mmahlke/Training/blob/main/thumbnail_image.png" alt="image of cluster sign-in messages" style="width:50%; height:50%;">
+</div>
 
 **These notifications are so important!** However, they are a bit outdated.
 + The current user guide is at [crc manual](https://crc-pages.pitt.edu/user-manual/)
@@ -47,7 +49,10 @@ You can see your location next to your username at the commandline prompt.
 ## Using the command line on the cluster
 Now that our terminal is connected to the CRC cluster, if we want to issue commands we have to speak in the computer's language so it can understand us. First, let's get an idea of how the CRC's logistic layers are arranged. 
 
-![computing layers](shell_layers.png)
+<div align="center">
+ <img src="https://github.com/mmahlke/Training/blob/main/shell_layers.png" alt="computing layers" style="width:50%; height:50%;">
+</div>
+
 *Source:https://mindmajix.com/shell-scripting-tutorial*
 
 The cluster's kernel is run by [Linux](https://en.wikipedia.org/wiki/Linux), as opposed to an operating system like MacOS or Windows. The kernel is he primary interface between the computer's hardware and the software processes running on it.
@@ -58,7 +63,7 @@ The language(s) we speak to the computer in are either **Linux** or **Bash**. Yo
 
 There are many websites with cheat sheets for basic Bash and Linux commands. I like [this](https://www.geeksforgeeks.org/linux-commands-cheat-sheet/) and [this](https://cheatography.com/davechild/cheat-sheets/linux-command-line/) but there are so many amazing resources out there that you can find. If you have time, take a look [here](https://github.com/jlevy/the-art-of-command-line).  
 
-Don't sleep on built-in help options that come with utilities in the command line. 
+Don't ignore built-in help options that come with utilities in the command line. 
 For example, if using `tar`, try:
 ```
 $ man tar
@@ -106,7 +111,10 @@ But what are nodes, cores, CPUs, etc?
 **An illustration can be very helpful**
 <br />  
 
-![resource organization](hpc-schematic.jpg)
+<div align="center">
+  <img src="https://github.com/mmahlke/Training/blob/main/hpc-schematic.jpg" alt="resource organization" style="width:75%; height:75%;">
+</div>
+
 *Read more about it here [Computing basics](https://ekatsevi.github.io/statistical-computing/hpc-basics.html)*
 
 + <ins>Node</ins>: a single computational unit within a cluster. Each node contains one or more CPUs and memory. A cluster can consist of a few to thousands of nodes, working together to execute large-scale computational tasks.
