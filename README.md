@@ -157,7 +157,10 @@ Recommended options:
 
 [Here](https://slurm.schedmd.com/pdfs/summary.pdf) is a cheat sheet to the basic slurm commands.
 
+## Requesting an interactive job
 **Let's request an interactive job and leave the login node**
+
+You can request an interactive session with `srun`. Here's and example requesting an interactive job on the htc cluster for 1 hour:
 
 ```srun -t 01:00:00 --cluster htc --partition htc --cpus-per-task=8 --pty bash```
 
@@ -168,7 +171,7 @@ Once resources are granted, you will see in your terminal that you are no longer
 
  If we enter `squeue -u <username> --cluster htc`, we will see our currently running job that we requested resources for on the htc cluster.
 
- **Now that we have a workspace, let's grab some files to practice with**
+ **Now that we have a workspace, let's grab some files to practice with.**
 
  There are 4 directories (folders, file paths) that you will work with on the cluster:
  + `/ihome/yarbely/<your_username>` is your personal home folder and scratch space
@@ -210,7 +213,7 @@ gunzip *.gz
 ```
 Here, using the wildcard symbol (*) means perform this operation on all files in the current directory with any name and ending with `.gz` .
 
-
+Most sequencing data starts as .fasta or .fastq (the more current version of .fasta) format. 
 
 
 
