@@ -278,7 +278,9 @@ fastcq -o ./fastqc PDNC4_1.fq
 Fastqc should output a report file into the /fastqc directory for each fastq file of reads. Let's download those files and open them in our browser.
 
 We should see something like this:
-
+<div align="center">
+  <img src="https://github.com/mmahlke/Training/blob/main/fastqc.png" alt="fastqc output" style="width:75%; height:75%;">
+</div>
 
 
 Let's look at a module we will use A LOT. 
@@ -286,6 +288,38 @@ Let's look at a module we will use A LOT.
 module load gcc/8.2.0
 module load samtools/1.14
 samtools --help
+
+```
+
+Samtools has a lot of utilities that are extremely useful for processing data once it has been aligned to an assembly. \
+It also has an excellent online manual you can find [here](https://www.htslib.org/doc/samtools.html).
+
+To create an aligned sequencing file, we need to take our raw reads (.fastq files) and align them to an assembly (we will use the T2T assembly). 
+
+First, we need to download the assembly files. We can get assembly files from two places:
++ [NLM-NCBI](https://www.ncbi.nlm.nih.gov/datasets/genome/)  
++ [UCSC](https://genome.ucsc.edu/cgi-bin/hgGateway)
+
+NCBI and UCSC assemblies contain the same information but the chromosome names are formatted diffently. This is important to be aware of for later steps. 
+
+Let's look at how we find the files we want in each location. Always read the README.txt to help you get the correct file.
+Let's download the NCBI version. One thing you will might not immediately notice is that NCBI's current human assembly (GRCh38.p14) has incorporated all previously missing sequences into it from the T2T assembly. You can download the T2T assembly or you can download the human assembly with complete centromere and repetitive sequences. 
+
+We will get the complete human assembly GRC38.p14 today. 
+
+We can use `wget` command to download large files directly from links. 
+
+```
+pwd
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz
+```
+Now we have an assembly and we have raw sequencing .fastq files. It's time to align them! But we don't want to do that in an interactive session--it will take some time for all the commands to complete and if we lose our internet connection, the commands will be terminated. We should submit this task as a batch job. 
+
+## Submitting batch jobs on the cluster
+
+
+
+
 
 
 
