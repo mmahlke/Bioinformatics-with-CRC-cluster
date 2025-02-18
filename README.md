@@ -40,7 +40,7 @@ When you do, you should get some text in your terminal like:
 + crc-interactive may be depricated; recommend using **SLURM** commands (see below)
 
 Most importantly, **DO NOT RUN ON THE LOGIN NODE!** \
-What is the login node? It's where you land after log in.
+What is the login node? It's where you land after log in. It's like the waiting room. \
 You can see your location next to your username at the commandline prompt. 
 <br />  
 ```[user123@login1 ~]$  ```
@@ -65,7 +65,7 @@ $ man tar
 
 $ info tar
 
-$ tar —help
+$ tar --help
 ```
 The best resource is your search engine. Want to do something but do not know how? Ask Google or ask ChatGPT.
 <br />
@@ -213,7 +213,71 @@ gunzip *.gz
 ```
 Here, using the wildcard symbol (*) means perform this operation on all files in the current directory with any name and ending with `.gz` .
 
-Most sequencing data starts as .fasta or .fastq (the more current version of .fasta) format. 
+Now we have our unpacked files. Let's **re-name** them so we don't have to continue using the really long sequencing file name. We can rename them simply by using the SSH file connection panel. Let's call them **PDNC4_1.fq** and **PDNC4_2.fq** for simplicity. 
+
+Most sequencing data starts as .fasta or .fastq (the more current version of .fasta) format. Let's investigate the structure of a .fastq file.
+
+```
+head -n 20 PDNC4_1.fastq
+```
+`head` is a Linux/BASH command that lets us see the beginning of a file. By default, it returns the first 5 lines of a file. Here, we specify the number of lines to display with ` -n 20 `. \
+`tail` command will show you the last -n lines of a file.
+
+A FASTQ file has four line-separated fields per sequence:
+
++ Field 1 begins with a '@' character and is followed by a sequence identifier and an optional description (like a FASTA title line).
++ Field 2 is the raw sequence letters.
++ Field 3 begins with a '+' character and is optionally followed by the same sequence identifier (and any description) again.
++ Field 4 encodes the quality values for the sequence in Field 2, and must contain the same number of symbols as letters in the sequence.
+
+It's silly to go through the reads and try to interpret what the quality values are. But we can use a command line utility (aka a **module**) to do that for us. 
+
+## Running modules on the cluster
+**Modules** are like software that run without a visual user interface. Instead, you will load them in Linux (starting them up, essentially), and then speak to them with their own unique sets of commands. 
+
+Each module is a tool created by a person or group to complete a specific task or set of tasks. As such, most modules have their own guides on how to use them, which can be intricate. 
+
+To start off, lets use `lmod` the module management utility to investigate modules on the cluster. 
+```
+module avail
+module spider fastqc
+
+module spider samtools
+```
+Module names are listed as "name/version#". Some modules will be available in several different versions. Sometimes it matters what version you use! So always track what version of a module you have used to process your data. 
+
+Some modules have special instructions on how to load them, like samtools requires you to load module gcc/8.2.0 before loading samtools itself. Before you use a module for the first time, it's helpful to use `module spider <module_name/with_version>` to check if the module has any special requirements. `module spider <module_name>` without a version# will return all versions of that module that are available on the cluster. 
+
+**Let's load fastqc** to perform a simple check on the .fastq files we have. 
+We can also make a directory for our output to be placed into. \
+` ./ ` proceeding the file name `fastqc` is a shorthand for 'current directory'. So we are making the new file called 'fastqc' in our current directory.
+```
+module load fastqc/0.11.9
+mkdir ./fastqc
+```
+Let's check to see the new directory is there in our SSH files window. 
+
+To give a command to the fastqc module, we need to use the right language that fastqc will understand. \
+We can find out more about the language by typing `fastqc --help`.
+
+Let's tell fastqc to run an analysis on one of our fastq files. The syntax we use is:
+```
+fastcq -o ./fastqc PDNC4_1.fq 
+```
++ where -o is the output location 
++ and PDNC4_1.fq is the file to use
+ 
+Fastqc should output a report file into the /fastqc directory for each fastq file of reads. Let's download those files and open them in our browser.
+
+We should see something like this:
+
+
+
+Let's look at a module we will use A LOT. 
+```
+module load gcc/8.2.0
+module load samtools/1.14
+samtools --help
 
 
 
