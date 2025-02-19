@@ -205,13 +205,15 @@ Let's change our directory to the space we want to work in:\
 ```$ cd /ix1/yarbely/<your_username>  ```
 
 Now create a file that we can put all of our training stuff into:\
-```$ mkdir /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
+```$ mkdir -p /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
+The `-p` option here instructs Linux to make the directories recursively--meaning all required directories and subdirectories will be created. If we try this command without `-p` it will fail because it will try to create directory `CR_PDNC4` in directory `training` which doesn't exist yet.
 
 Let's copy some files into our training directory so we can investigate them:\
-```$ cp /bgfs/yarbely/Data/CUT_RUN/Pool_4/01.RawData/YNA_4_1/. /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
+```$ cp -r /bgfs/yarbely/Data/CUT_RUN/Pool_4/01.RawData/YNA_4_1/ /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
 + YNA_4_1 is a PD-NC4 control sample
 + copy command syntax is `cp <source> <destination>`
 + /.../YNA_4_1/.    the '.' at the end means the source is all files and folders inside of /YNA_4_1 directory
++ cp by default does not copy directories unless you specify the -r (recursive) option
  
 Notice the file extension at the end of the file name. It ends with ".fq.gz". This indicates that the normal extension for the files is .fastq but they have been compressed with `gzip` utility. Let's unzip them:
 ```
@@ -270,7 +272,7 @@ We can find out more about the language by typing `fastqc --help`.
 
 Let's tell fastqc to run an analysis on one of our fastq files. The syntax we use is:
 ```
-fastcq -o ./fastqc PDNC4_1.fq 
+fastqc -o ./fastqc PDNC4_1.fq 
 ```
 + where -o is the output location 
 + and PDNC4_1.fq is the file to use
