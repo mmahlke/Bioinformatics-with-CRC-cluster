@@ -199,7 +199,7 @@ Once resources are granted, you will see in your terminal that you are no longer
 
 First, let's check our current location in the directory of all the files:\
 ```$ pwd  ```\
-Your current directory is often called your working directory (ie. the directory you are currently working in).
+Your current directory is often called your working directory (ie. the directory you are currently working in). `pwd` stands for "ping working directory", so identify and return our current directory.
 
 Let's change our directory to the space we want to work in:\
 ```$ cd /ix1/yarbely/<your_username>  ```
