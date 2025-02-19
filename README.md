@@ -180,7 +180,7 @@ Once resources are granted, you will see in your terminal that you are no longer
  \
  `[user123@htc-657-n3 ~]$` 
 
- If we enter `squeue -u <username> --cluster htc`, we will see our currently running job that we requested resources for on the htc cluster.
+ If we enter `squeue -u <username> --cluster htc`, we will see our currently running job that we requested resources for on the htc cluster listed in the $$\textnormal{\color{darkorange}queue}$$.
 
  **Now that we have a workspace, let's grab some files to practice with.**
 
@@ -209,7 +209,7 @@ Let's change our directory to the space we want to work in:\
 ```$ cd /ix1/yarbely/<your_username>  ```
 
 Now create a file that we can put all of our training stuff into:\
-```$ mkdir -p /ix1/yarbely/<your_username>/training/CR_PDNC4  ``` \
+```$ mkdir -p /ix1/yarbely/<your_username>/training/CR_PDNC4  ``` 
 
 The `-p` option here instructs Linux to make the directories recursively--meaning all required directories and subdirectories will be created. If we try this command without `-p` it will fail because it will try to create directory `CR_PDNC4` in directory `training` which doesn't exist yet.
 
@@ -220,7 +220,9 @@ Let's copy some files into our training directory so we can investigate them:\
 + /.../YNA_4_1/.    the '.' at the end means the source is all files and folders inside of /YNA_4_1 directory
 + cp by default does not copy directories unless you specify the -r (recursive) option
  
-Notice the file extension at the end of the file name. It ends with ".fq.gz". This indicates that the normal extension for the files is .fastq but they have been compressed with `gzip` utility. Let's unzip them:
+Notice the $$\textnormal{\color{darkorange}file extension}$$ at the end of the file name. It ends with ".fq.gz". This indicates that the normal extension for the files is .fastq but it has been compressed with `gzip` utility. \ 
+  \
+**Let's unzip them:**
 ```
 cd /ix1/yarbely/<your_username>/training/CR_PDNC4 
 gunzip *.gz 
@@ -248,7 +250,7 @@ A FASTQ file has four line-separated fields per sequence:
 It's silly to go through the reads and try to interpret what the quality values are. But we can use a command line utility (aka a **module**) to do that for us. 
 
 ## Running modules on the cluster
-**Modules** are like software that run without a visual user interface. Instead, you will load them in Linux (starting them up, essentially), and then speak to them with their own unique sets of commands. 
+$$\textnormal{\color{darkorange}Modules}$$ are like software that run without a visual user interface. Instead, you will load them in Linux (starting them up, essentially), and then speak to them with their own unique sets of commands. 
 
 Each module is a tool created by a person or group to complete a specific task or set of tasks. As such, most modules have their own guides on how to use them, which can be intricate. 
 
@@ -265,11 +267,13 @@ Some modules have special instructions on how to load them, like samtools requir
 
 **Let's load fastqc** to perform a simple check on the .fastq files we have. 
 We can also make a directory for our output to be placed into. \
-` ./ ` proceeding the file name `fastqc` is a shorthand for 'current directory'. So we are making the new file called 'fastqc' in our current directory.
+
 ```
 module load fastqc/0.11.9
 mkdir ./fastqc
 ```
+` ./ ` proceeding the file name `fastqc` is a shorthand for 'current directory'. So we are making the new file called 'fastqc' in our current directory.
+
 Let's check to see the new directory is there in our SSH files window. 
 
 To give a command to the fastqc module, we need to use the right language that fastqc will understand. \
@@ -290,7 +294,7 @@ We should see something like this:
 </div>
 
 <br />   
-Let's look at a module we will use A LOT. 
+Let's look at a module we will use A LOT, $$\textnormal{\color{darkorange}samtools}$$. 
 
 ```
 module load gcc/8.2.0
@@ -298,19 +302,20 @@ module load samtools/1.14
 samtools --help
 ```
 
-**Samtools** has a lot of utilities that are extremely useful for processing data once it has been aligned to an assembly. \
+$$\textnormal{\color{darkorange}Samtools}$$ has a lot of utilities that are extremely useful for processing data once it has been aligned to an assembly. \
 It also has an excellent online manual you can find [here](https://www.htslib.org/doc/samtools.html).
 
-To create an aligned sequencing file, we need to take our raw reads (.fastq files) and align them to an assembly (we will use the T2T assembly). 
+To create an $$\textnormal{\color{darkorange}aligned sequencing file}$$, we need to take our raw reads (.fastq files) and align them to an $$\textnormal{\color{darkorange}assembly}$$. 
 
 First, we need to download the assembly files. We can get assembly files from two places:
 + [NLM-NCBI](https://www.ncbi.nlm.nih.gov/datasets/genome/)  
 + [UCSC](https://genome.ucsc.edu/cgi-bin/hgGateway)
 
-NCBI and UCSC assemblies contain the same information but the chromosome names are formatted diffently. This is important to be aware of for later steps. 
+NCBI and UCSC assemblies contain the same information but the $$\textnormal{\color{darkorange}chromosome names are formatted diffently}$$. This is important to be aware of for later steps. 
 
-Let's look at how we find the files we want in each location. Always read the README.txt to help you get the correct file.
-Let's download the NCBI version. One thing you will might not immediately notice is that NCBI's current human assembly (GRCh38.p14) has incorporated all previously missing sequences into it from the T2T assembly. You can download the T2T assembly or you can download the human assembly with complete centromere and repetitive sequences. 
+Let's look at how we find the files we want in each location. Always read the $$\textnormal{\color{darkorange}README.txt}$$ to help you get the correct file.
+
+Let's download the NCBI version. One thing you will might not immediately notice is that $$\textnormal{\color{darkorange}NCBI's current human assembly (GRCh38.p14)}$$ has incorporated all previously missing sequences into it from the T2T assembly. You can download the T2T assembly or you can download the human assembly with complete centromere and repetitive sequences. 
 
 We will get the complete human assembly GRC38.p14 today. 
 
@@ -320,23 +325,23 @@ We can use `wget` command to download large files directly from links.
 pwd
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz
 ```
-Now we have an assembly and we have raw sequencing .fastq files. It's time to align them! But we don't want to do that in an interactive session--it will take some time for all the commands to complete and if we lose our internet connection, the commands will be terminated. We should submit this task as a batch job. 
+Now we have an assembly and we have raw sequencing .fastq files. It's time to align them! But we don't want to do that in an interactive session--it will take some time for all the commands to complete and if we lose our internet connection, the commands will be terminated. We should submit this task as a $$\textnormal{\color{darkorange}batch job}$$. 
 
 ## Submitting batch jobs on the cluster
 
-Submitting a batch job is equivalent to sending a list of instructions to the cluster without being able to check between steps. Sometimes this approach is called 'submitting a batch script'. 
+Submitting a $$\textnormal{\color{darkorange}batch job}$$ is equivalent to sending a list of instructions to the cluster without being able to check between steps. Sometimes this approach is called 'submitting a batch script'. 
 
-You've probably heard the term 'script' a lot. What does that even mean? It's exactly what it sounds like. A play has a script that tells the actors what to say, when to say, how to say, where to stand, how loud to be, etc, etc. A 'script' is just a set of directions you supply to the cluster. \
+You've probably heard the term $$\textnormal{\color{darkorange}script}$$ a lot. What does that even mean? It's exactly what it sounds like. A play has a script that tells the actors what to say, when to say, how to say, where to stand, how loud to be, etc, etc. A $$\textnormal{\color{darkorange}script}$$ is just a set of directions you supply to the cluster. \
 
-Batch scripts are just text files and you can build them in any text editor. Open whatever text editor your computer already comes equipped with. \
+Batch scripts are just text files and you can build them in any $$\textnormal{\color{darkorange}text editor}$$. Open whatever text editor your computer already comes equipped with. \
 
-I like [notepad++](https://notepad-plus-plus.org/) if you like to have extra features!
+I like [notepad++](https://notepad-plus-plus.org/) because I like to have extra features!
 
-To start a script, we need to tell Linux what command line interface (CLI) we want to use to interpret the rest of the script. Ours is BASH. The lines at the beginning of the script are called the bash shebang and starts with the characters #!. For bash scripts, it typically looks like this: #!/bin/bash or #!/usr/bin/env bash.
+To start a $$\textnormal{\color{darkorange}script}$$, we need to tell Linux what command line interface (CLI) we want to use to interpret the rest of the script. Ours is $$\textnormal{\color{darkorange}BASH}$$. The lines at the beginning of the script are called the $$\textnormal{\color{darkorange}bash shebang}$$ and starts with the characters #!. For bash scripts, it typically looks like this: `#!/bin/bash` or `#!/usr/bin/env bash`.
 
-We also want to specify the resources and specifications should be used for this job in the subsequent lines. For those lines, we do not need to include '!', but we will start the lines with '#' and follow with command "SBATCH" to specify that these are instructions to SLURM. \
+We also want to specify the $$\textnormal{\color{darkorange}resources and specifications}$$ that should be used for this job in the subsequent lines. For those lines, we do not need to include '!', but we will start the lines with '#' (hastag) and follow with command `SBATCH` to specify that these are instructions to SLURM. \
 
-In general, across many computing languages used to write scripts, lines that start with '#' are 'read' but not 'executed'. Lines starting with '#' can be explicit instructions to the operating system or they can be comments for the reader/writer. Either way, Linux will interpret '#' lines are non-commands or non-executables. \
+In general, across many computing languages used to write scripts, $$\textnormal{\color{darkorange}lines that start with '#' are 'read' but not 'executed'}$$. Lines starting with '#' can be explicit instructions to the operating system or they can be comments for the reader/writer. Either way, Linux will interpret '#' lines are non-commands or non-executables. \
 
 Let's start our file like this:
 ```
@@ -354,7 +359,7 @@ Let's start our file like this:
 ```
 Here, we are requesting resources for a job named "PDNC4_practice" for 24 hours on the htc cluster which has only one partition, the htc partition. We have requested 16 cpus per task. We have requested verbose output, which means any possible output to the terminal from our commands will be recorded. And we have specified files for the output and error messages to be placed into. 
 
-Now we should tell Linux what modules we need to load to complete the tasks in this script. For this script, we will build an index for our assembly file, trim our raw reads, and align them to the assembly. To do that, we need:
+Now we should tell Linux what $$\textnormal{\color{darkorange}modules}$$ we need to load to complete the tasks in this script. For this script, we will build an index for our assembly file, trim our raw reads, and align them to the assembly. To do that, we need:
 ```
 module load cutadapt/2.10
 module load gcc/8.2.0
@@ -369,7 +374,7 @@ cd /ix1/yarbely/<your_user>/training/CR_PDNC4/
 
 Now we can add our commands. 
 
-First, we will trim the reads with CutAdapt to remove any remaining adapter sequences that can interfere with alignment to the reference assembly. 
+First, we will trim the reads with [CutAdapt](https://cutadapt.readthedocs.io/en/stable/) to remove any remaining adapter sequences that can interfere with alignment to the reference assembly. 
 ```
 cutadapt \
 	-m 20 \
