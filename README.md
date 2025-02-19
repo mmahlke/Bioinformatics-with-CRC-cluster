@@ -7,26 +7,26 @@
 ![Image depicting accessing the cluster from your computer.](https://crc-pages.pitt.edu/user-manual/_assets/img/getting-started/getting-started-map.png)
 *Image from CRC user manual*
 
-The 'cluster' refers to the <code style="color : darkorange">**CRC ecosystem**</code> that contains the total footprint of the CRC infrastructure, including high performance computing clusters, data storage systems, networking equipment, and software. For us, we can simply imagine it as a giant, stronger, faster computer. 
+The 'cluster' refers to the $$\textnormal{\color{darkorange}CRC ecosystem}$$ that contains the total footprint of the CRC infrastructure, including high performance computing clusters, data storage systems, networking equipment, and software. For us, we can simply imagine it as a giant, stronger, faster computer. 
 
-Why are we using it? A typical laptop or personal computer does not have enough storage space or resources (Memory, Processing power) to analyse many sequencing files.
+Why are we using it? A typical laptop or personal computer does not have enough storage space or $$\textnormal{\color{darkorange}resources}$$ (Memory, Processing power) to analyse many sequencing files.
 + CUT&RUN ~ 3 Gb per experiment
 + DiMeLo-seq ~ 20 Gb per experiment  
 \
 The storage footprint of sequencing files can double or triple during analysis.
 
-We conenct to the CRC cluster through our **Client**, which is the software we are using on our personal computer to interact with the CRC cluster. Our interactions with the cluster pass through an **Access Portal**, or a remote server that take the information we submit from our client and passes it on to the CRC cluster. \
+We conenct to the CRC cluster through our $$\textnormal{\color{darkorange}Client}$$, which is the software we are using on our personal computer to interact with the CRC cluster. Our interactions with the cluster pass through an $$\textnormal{\color{darkorange}Access Portal}$$, or a remote server that take the information we submit from our client and passes it on to the CRC cluster. \
  \
-**Access portals** are typically remote servers, which refers to a computer system that is accessed over a network, like the internet, allowing users to store, manage, and access data and applications from anywhere with an internet connection, rather than being physically located in the same place as the user.
+$$\textnormal{\color{darkorange}Access portals}$$ are typically remote servers, which refers to a computer system that is accessed over a $$\textnormal{\color{darkorange}network}$$ , like the internet, allowing users to store, manage, and access data and applications from anywhere with an internet connection, rather than being physically located in the same place as the user.
 
-For us, our **client(s)** are Pitt's VPN software, which gives us access to Pitt's secure private network, and our terminal emulator software (MobaXterm or Termius), which allows us to establish a connection to the CRC. 
+For us, our **client(s)** are Pitt's $$\textnormal{\color{darkorange}VPN}$$ software, which gives us access to Pitt's secure private network, and our $$\textnormal{\color{darkorange}terminal emulator software}$$ (MobaXterm or Termius), which allows us to establish a connection to the CRC. 
 
-What is a VPN? It's a **Virtual Private Network**. Essentailly it is a security blanket being wrapped around your internet connection to prevent others from seeing what you are doing and to provide increased security. In our case, Pitt's VPN forced us to prove who we are (your pitt username and password), it authenticated us (it agreed we are that person), and then it allowed us access to the PITT network from our personal computer. This keeps non-PITT people out of Pitt's network and they cannot access the cluster. 
+What is a $$\textnormal{\color{darkorange}VPN}$$? It's a **Virtual Private Network**. Essentailly it is a security blanket being wrapped around your internet connection to prevent others from seeing what you are doing and to provide increased security. In our case, Pitt's VPN forced us to prove who we are (your pitt username and password), it authenticated us (it agreed we are that person), and then it allowed us access to the PITT network from our personal computer. This keeps non-PITT people out of Pitt's network and they cannot access the cluster. 
 
 
-Why is it called a terminal emulator? Take yourself way back in your imagination to when computers were huge and took up an entire room. The box that controlled the computer was called the terminal. Here, the terminal emulator is serving the same function for the CRC cluster, but instead of being connected to the giant computer (cluster), it's giving commands to the giant computer over the internet. 
+Why is it called a $$\textnormal{\color{darkorange}terminal emulator}$$? Take yourself way back in your imagination to when computers were huge and took up an entire room. The box that controlled the computer was called the terminal. Here, the terminal emulator is serving the same function for the CRC cluster, but instead of being connected to the giant computer (cluster), it's giving commands to the giant computer over the internet. 
 
-Our **access portal** refers to how we are interacting with the cluster. We will primarily interact through the 'login node' pictured above. CRC also provides user access to viz (in-browser Linux Desktop environment on the CRCD system), OnDemand (requesting resources for interactive visual software, etc) and JupyterHub (web-based interactive development environment for notebooks, code, and data). 
+Our $$\textnormal{\color{darkorange}access portal}$$ refers to how we are interacting with the cluster. We will primarily interact through the 'login node' pictured above. CRC also provides user access to viz (in-browser Linux Desktop environment on the CRCD system), OnDemand (requesting resources for interactive visual software, etc) and JupyterHub (web-based interactive development environment for notebooks, code, and data). 
 <br />  
 
 ## Logging in to the cluster
@@ -42,7 +42,7 @@ When you do, you should get some text in your terminal like:
 
 **These notifications are so important!** However, they are a bit outdated.
 + The current user guide is at [crc manual](https://crc-pages.pitt.edu/user-manual/)
-+ crc-interactive may be depricated; recommend using **SLURM** commands (see below)
++ crc-interactive may be depricated; recommend using $$\textnormal{\color{darkorange}SLURM}$$ commands (see below)
 
 Most importantly, **DO NOT RUN ON THE LOGIN NODE!** \
 What is the login node? It's where you land after log in. It's like the waiting room. \
@@ -58,15 +58,15 @@ Now that our terminal is connected to the CRC cluster, if we want to issue comma
 
 *Source:https://mindmajix.com/shell-scripting-tutorial*
 
-The cluster's kernel is run by [Linux](https://en.wikipedia.org/wiki/Linux), as opposed to an operating system like MacOS or Windows. The kernel is he primary interface between the computer's hardware and the software processes running on it.
+The cluster's $$\textnormal{\color{darkorange}kernel}$$ is run by [Linux](https://en.wikipedia.org/wiki/Linux), as opposed to an operating system like MacOS or Windows. The kernel is he primary interface between the computer's hardware and the software processes running on it.
 
-The cluster is also 'wrapped' by a command-line interface (CLI) program that allows users to interact with the kernel by typing commands. This 'shell' wrapping the kernel is called [BASH](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) (or Bourne Again Shell). 
+The cluster is also 'wrapped' by a command-line interface (CLI) program that allows users to interact with the kernel by typing commands. This $$\textnormal{\color{darkorange}'shell'}$$ wrapping the kernel is called [BASH](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) (or Bourne Again Shell). 
 
 The language(s) we speak to the computer in are either **Linux** or **Bash**. You will find a lot of murky language discussing Bash and Linux. In fact, it's easy (and common) to confuse Linux and Bash commands. And really there are only small differenes in when we use them. Technically, BASH commands are a subset of Linux commands focused on shell scripting, whereas Linux commands encompass a larger set of tools. Bash is primarily a user interface for communicating with Linux, though Linux commands exist outside of Bash and can also be executed on the command line. 
 
 There are many websites with cheat sheets for basic Bash and Linux commands. I like [this](https://www.geeksforgeeks.org/linux-commands-cheat-sheet/) and [this](https://cheatography.com/davechild/cheat-sheets/linux-command-line/) but there are so many amazing resources out there that you can find. If you have time, take a look [here](https://github.com/jlevy/the-art-of-command-line).  
 
-Don't ignore built-in help options that come with utilities in the command line. 
+Don't ignore $$\textnormal{\color{darkorange}built-in help options}$$ that come with utilities in the command line. 
 For example, if using `tar`, try:
 ```
 $ man tar
@@ -95,7 +95,7 @@ Other than small commands, we cannot work on the login node so we need to reques
 
 ## The 'cluster' is composed of different clusters
 
-The parts of the CRC ecosystem are organized into clusters designed for unique usage or tasks. 
+The parts of the $$\textnormal{\color{darkorange}CRC ecosystem}$$ are organized into clusters designed for unique usage or tasks. 
 <br />  
 <br />  
 
@@ -134,7 +134,7 @@ You can find more information about the organization of each cluster **here:**
 + [GPU](https://crc-pages.pitt.edu/user-manual/hardware_profiles/gpu/)
 
   
-<ins>**Remember**</ins>
+$$\textnormal{\color{darkorange}Remember:}$$
 + Clusters are organized in a resource heirarchy
   + Cluster > partition > node > CPU > core
 + Always refer to the cluster organization to design your resource request--your request will be denied if the requested resources cannot be given
@@ -143,7 +143,7 @@ You can find more information about the organization of each cluster **here:**
 
 ## SLURM resource manager
 
-**SLURM (Simple Linux Utility for Resource Management) resource manager** is a system for requesting resources from the cluster. Once you request resources, they are assigned to you as a 'job' that comes with a Job ID. You can request two different types of jobs with slurm:
+**SLURM (Simple Linux Utility for Resource Management) resource manager** is a system for requesting resources from the cluster. Once you request resources, they are assigned to you as a $$\textnormal{\color{darkorange}'job'}$$ that comes with a Job ID. You can request two different types of $$\textnormal{\color{darkorange}jobs}$$ with slurm:
 + **Interactive jobs** will run directly in your terminal emulator and you can interact with them using the command line prompt
 + **Batch jobs** are submitted directly to the cluster and run in the background--you do not see them being executed but you can specify diffeernt types of output to understand how they ran or are running
 
@@ -171,11 +171,11 @@ Recommended options:
 ## Requesting an interactive job
 **Let's request an interactive job and leave the login node**
 
-You can request an interactive session with `srun`. Here's and example requesting an interactive job on the htc cluster for 1 hour:
+You can request an interactive session with `srun`. Here's and example requesting an $$\textnormal{\color{darkorange}interactive job}$$ on the htc cluster for 1 hour:
 
 ```srun -t 01:00:00 --cluster htc --partition htc --cpus-per-task=8 --pty bash```
 
-You will recieve notification of your resource request and notification when it is granted. Resource requests can take longer to fill if you request a greater share of the resources. This is true for interactive and batch jobs. If resources are currently unavailable, you will be placed in a queue. 
+You will recieve notification of your resource request and notification when it is granted. Resource requests can take longer to fill if you request a greater share of the resources. This is true for interactive and batch jobs. If resources are currently unavailable, you will be placed in a $$\textnormal{\color{darkorange}queue}$$. 
 Once resources are granted, you will see in your terminal that you are no longer in the login node and are now working in a node on the htc cluster. \
  \
  `[user123@htc-657-n3 ~]$` 
@@ -184,7 +184,7 @@ Once resources are granted, you will see in your terminal that you are no longer
 
  **Now that we have a workspace, let's grab some files to practice with.**
 
- There are 4 directories (folders, file paths) that you will work with on the cluster:
+ There are $$\textnormal{\color{darkorange}4 directories}$$ (folders, file paths) that you will work with on the cluster:
  + `/ihome/yarbely/<your_username>` is your personal home folder and scratch space
    + you can store small files here like models, custom scripts or whatever you please
    + when you build a virtual environment, it will be installed here
@@ -202,13 +202,15 @@ Once resources are granted, you will see in your terminal that you are no longer
 
 First, let's check our current location in the directory of all the files:\
 ```$ pwd  ```\
+   \
 Your current directory is often called your working directory (ie. the directory you are currently working in). `pwd` stands for "ping working directory", so identify and return our current directory.
 
 Let's change our directory to the space we want to work in:\
 ```$ cd /ix1/yarbely/<your_username>  ```
 
 Now create a file that we can put all of our training stuff into:\
-```$ mkdir -p /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
+```$ mkdir -p /ix1/yarbely/<your_username>/training/CR_PDNC4  ``` \
+
 The `-p` option here instructs Linux to make the directories recursively--meaning all required directories and subdirectories will be created. If we try this command without `-p` it will fail because it will try to create directory `CR_PDNC4` in directory `training` which doesn't exist yet.
 
 Let's copy some files into our training directory so we can investigate them:\
@@ -224,7 +226,7 @@ cd /ix1/yarbely/<your_username>/training/CR_PDNC4
 gunzip *.gz 
 
 ```
-Here, using the wildcard symbol (*) means perform this operation on all files in the current directory with any name and ending with `.gz` .
+Here, using the $$\textnormal{\color{darkorange}wildcard symbol (*)}$$ means perform this operation on all files in the current directory with any name and ending with `.gz` .
 
 Now we have our unpacked files. Let's **re-name** them so we don't have to continue using the really long sequencing file name. We can rename them simply by using the SSH file connection panel. Let's call them **PDNC4_1.fq** and **PDNC4_2.fq** for simplicity. 
 
