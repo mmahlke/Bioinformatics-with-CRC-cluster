@@ -331,17 +331,17 @@ Now we have an assembly and we have raw sequencing .fastq files. It's time to al
 
 Submitting a $$\textnormal{\color{darkorange}batch job}$$ is equivalent to sending a list of instructions to the cluster without being able to check between steps. Sometimes this approach is called 'submitting a batch script'. 
 
-You've probably heard the term $$\textnormal{\color{darkorange}script}$$ a lot. What does that even mean? It's exactly what it sounds like. A play has a script that tells the actors what to say, when to say, how to say, where to stand, how loud to be, etc, etc. A $$\textnormal{\color{darkorange}script}$$ is just a set of directions you supply to the cluster. \
+You've probably heard the term $$\textnormal{\color{darkorange}script}$$ a lot. What does that even mean? It's exactly what it sounds like. A play has a script that tells the actors what to say, when to say, how to say, where to stand, how loud to be, etc, etc. A $$\textnormal{\color{darkorange}script}$$ is just a set of directions you supply to the cluster. 
 
-Batch scripts are just text files and you can build them in any $$\textnormal{\color{darkorange}text editor}$$. Open whatever text editor your computer already comes equipped with. \
+Batch scripts are just text files and you can build them in any $$\textnormal{\color{darkorange}text editor}$$. Open whatever text editor your computer already comes equipped with. 
 
 I like [notepad++](https://notepad-plus-plus.org/) because I like to have extra features!
 
 To start a $$\textnormal{\color{darkorange}script}$$, we need to tell Linux what command line interface (CLI) we want to use to interpret the rest of the script. Ours is $$\textnormal{\color{darkorange}BASH}$$. The lines at the beginning of the script are called the $$\textnormal{\color{darkorange}bash shebang}$$ and starts with the characters #!. For bash scripts, it typically looks like this: `#!/bin/bash` or `#!/usr/bin/env bash`.
 
-We also want to specify the $$\textnormal{\color{darkorange}resources and specifications}$$ that should be used for this job in the subsequent lines. For those lines, we do not need to include '!', but we will start the lines with '#' (hastag) and follow with command `SBATCH` to specify that these are instructions to SLURM. \
+We also want to specify the $$\textnormal{\color{darkorange}resources and specifications}$$ that should be used for this job in the subsequent lines. For those lines, we do not need to include '!', but we will start the lines with '#' (hashtag) and follow with command `SBATCH` to specify that these are instructions to SLURM. 
 
-In general, across many computing languages used to write scripts, $$\textnormal{\color{darkorange}lines that start with '#' are 'read' but not 'executed'}$$. Lines starting with '#' can be explicit instructions to the operating system or they can be comments for the reader/writer. Either way, Linux will interpret '#' lines are non-commands or non-executables. \
+In general, across many computing languages used to write scripts, lines that start with **'#'** are $$\textnormal{\color{darkorange}'read'}$$ but not $$\textnormal{\color{darkorange}'executed'}$$. Lines starting with '#' can be explicit instructions to the operating system or they can be comments for the reader/writer. Either way, Linux will interpret '#' lines are non-commands or non-executables. 
 
 Let's start our file like this:
 ```
