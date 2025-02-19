@@ -43,7 +43,7 @@ When you do, you should get some text in your terminal like:
 
 Most importantly, **DO NOT RUN ON THE LOGIN NODE!** \
 What is the login node? It's where you land after log in. It's like the waiting room. \
-You can see your location next to your username at the commandline prompt. 
+You can see your location next to your username at the command line prompt. 
 <br />  
 ```[user123@login1 ~]$  ```
 ## Using the command line on the cluster
