@@ -214,7 +214,7 @@ Now create a file that we can put all of our training stuff into:\
 The `-p` option here instructs Linux to make the directories recursively--meaning all required directories and subdirectories will be created. If we try this command without `-p` it will fail because it will try to create directory `CR_PDNC4` in directory `training` which doesn't exist yet.
 
 Let's copy some files into our training directory so we can investigate them:\
-```$ cp -r /bgfs/yarbely/Data/CUT_RUN/Pool_4/01.RawData/YNA_4_1/ /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
+```$ cp -r /bgfs/yarbely/Data/CUT_RUN/Pool_4/01.RawData/YNA_4_1/. /ix1/yarbely/<your_username>/training/CR_PDNC4  ```
 + YNA_4_1 is a PD-NC4 control sample
 + copy command syntax is `cp <source> <destination>`
 + /.../YNA_4_1/.    the '.' at the end means the source is all files and folders inside of /YNA_4_1 directory
