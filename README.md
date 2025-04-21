@@ -276,7 +276,7 @@ mkdir ./fastqc
 
 Let's check to see the new directory is there in our SSH files window. 
 
-To give a command to the fastqc module, we need to use the right language that fastqc will understand. \
+To give a command to the fastqc module, we need to use the right language that fastqc will understand. 
 We can find out more about the language by typing `fastqc --help`.
 
 Let's tell fastqc to run an analysis on one of our fastq files. The syntax we use is:
@@ -294,6 +294,7 @@ We should see something like this:
 </div>
 
 <br />   
+
 Let's look at a module we will use A LOT, $$\textnormal{\color{darkorange}samtools}$$. 
 
 ```
